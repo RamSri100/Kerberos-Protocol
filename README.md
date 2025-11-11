@@ -1,5 +1,5 @@
 # Kerberos-Protocol
-# Simplified Kerberos Authentication Protocol – Python Implementation
+# Simplified Kerberos Authentication Protocol Implementation using Python
 
 This project is a simplified educational implementation of the Kerberos authentication protocol using Python.  
 It demonstrates the core principles of Kerberos: secure authentication, ticket-based access, session keys, and trusted third-party verification.  
