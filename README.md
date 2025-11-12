@@ -1,124 +1,139 @@
 # Kerberos-Protocol
 # Simplified Kerberos Authentication Protocol Implementation using Python
 
-This project is a simplified educational implementation of the Kerberos authentication protocol using Python.  
-It demonstrates the core principles of Kerberos: secure authentication, ticket-based access, session keys, and trusted third-party verification.  
-All cryptographic logic (key derivation, encryption, ticket creation, session key handling, etc.) is **implemented manually**, without using any built-in or third-party cryptographic libraries, in accordance with project requirements.
+Overview:
+
+This project is a simplified educational implementation of the Kerberos authentication protocol using Python.
+It demonstrates the core principles of Kerberos — secure user authentication, ticket-based access control, and session key exchange — implemented manually without relying on any cryptographic libraries such as cryptography, pycrypto, or openssl.
+
+The project simulates the three primary entities of the Kerberos system:
+
+Authentication Server (AS)
+
+Ticket Granting Server (TGS)
+
+Service Server (Resource Server)
+
+Client
 
 ---
 
- Project Objectives
+ Project Objectives:
 - Understand and implement the Kerberos authentication workflow.
 - Demonstrate secure access using Ticket Granting Tickets (TGTs) and Service Tickets.
 - Build a working AS → TGS → Service Server communication system.
-- Implement encryption, decryption, key generation, and timestamp validation **from scratch**.
+- Implement manual cryptographic logic for encryption, decryption, and key derivation
+- Reinforce information security principles — authentication, confidentiality, and freshness validation
 - Provide a functional end-to-end simulation using Python.
 
 ---
 
-Overview of Kerberos Protocol
+Structure:
+kerberos-sim/
+│
+├── client.py               → Simulates the Kerberos client workflow
+├── server_as.py            → Authentication Server (AS)
+├── server_tgs.py           → Ticket Granting Server (TGS)
+├── server_service.py       → Resource/Service Server
+├── crypto_utils.py         → Custom-built encryption, decryption, key derivation
+├── .gitignore              → Ignored files (venv, __pycache__)
+└── README.md               → Documentation file
 
-Kerberos is a network authentication protocol that uses symmetric-key cryptography and a trusted third party to authenticate clients to services securely.
-
-Core components included in this project:
-
-1. **Authentication Server (AS)**  
-   - Verifies user credentials  
-   - Issues the Ticket Granting Ticket (TGT)  
-   - Issues the Client–TGS session key  
-
-2. **Ticket Granting Server (TGS)**  
-   - Validates the TGT  
-   - Issues Service Tickets  
-   - Issues the Client–Service session key  
-
-3. **Service Server**  
-   - Validates the Service Ticket  
-   - Validates the client’s authenticator  
-   - Grants access to protected resources  
-
-4. **Client**  
-   - Initiates login  
-   - Requests TGT and Service Ticket  
-   - Generates authenticators  
-   - Accesses the requested service  
-
-
-
-Tools & Technologies
-
-### Programming
-- **Python 3.9+**
-
-### Servers (implemented as Python modules)
-- `server_as.py` – Authentication Server  
-- `server_tgs.py` – Ticket Granting Server  
-- `server_service.py` – Resource Server  
-- `client.py` – Kerberos Client Program  
-
-### Manual Cryptography
-Stored in `crypto_utils.py`:
-- XOR-based encryption/decryption (custom implementation)  
-- Custom key derivation using SHA-256 (standard library)  
-- Hex encoding/decoding  
-- Timestamp generation and freshness validation  
-
-### Storage
-- In-memory dictionaries for users and service keys
-- JSON-encoded encrypted tickets
-
-No external cryptographic libraries were used.
-
----
-Workflow: AS → TGS → Service Server
-
-### Step 1: Authentication Server (AS)
-- Client sends username & password
-- AS verifies user
-- AS returns:
-  - **TGT** (encrypted with TGS master key)
-  - **Client–TGS session key** (encrypted with password-derived key)
-
-### Step 2: Ticket Granting Server (TGS)
-- Client sends TGT + Authenticator
-- TGS validates TGT and Authenticator
-- TGS returns:
-  - **Service Ticket**
-  - **Client–Service session key** (encrypted with Client–TGS key)
-
-### Step 3: Service Server
-- Client sends Service Ticket + Authenticator
-- Service validates both
-- Access is granted to the protected resource
 
 ---
 
-Expected Output
+Approach:
+1. Authentication Phase (AS)
 
-After running `client.py` the output should show:
+Client sends username and password to the Authentication Server.
 
-- Successful login via AS  
-- Valid TGT  
-- Valid Service Ticket  
-- Valid Client–Service session key  
-- Successful access to service  
+AS verifies credentials and issues a Ticket Granting Ticket (TGT) encrypted with the TGS master key.
 
-How to Run
+AS sends back:
 
- 1. Activate virtual environment
-venv\Scripts\activate # Windows
-source venv/bin/activate # Linux/macOS
+The TGT
 
-shell
-Copy code
+The Client–TGS Session Key, encrypted with a key derived from the client’s password.
 
-2. Run the client
+2. Ticket Granting Phase (TGS)
+
+Client sends TGT and an Authenticator (encrypted with the Client–TGS Session Key) to the TGS.
+
+TGS validates both and issues:
+
+A Service Ticket (encrypted with the service’s master key)
+
+A Client–Service Session Key, encrypted with the Client–TGS Session Key.
+
+3. Service Access Phase (Resource Server)
+
+Client sends the Service Ticket and an Authenticator (encrypted with the Client–Service Session Key) to the Service Server.
+
+Server decrypts, validates, and grants access to the protected resource.
+
+---------
+Challenges:
+Understanding Kerberos ticket flow (AS → TGS → Service)- Studied real Kerberos packet flow and simplified it logically
+Avoiding crypto libraries- Implemented XOR cipher and key derivation manually
+Ticket & timestamp validation-Created reusable helper functions for freshness verification
+Managing multiple keys-Used consistent JSON structures and hex-encoding for clarity
+Organizing modules-Divided each stage into separate Python files for modular clarity
+
+---------
+
+
+---------
+
+How to Run:
+
+Step 1: Clone the repository
+git clone https://github.com/RamSri100/Kerberos-Protocol.git
+cd Kerberos-Protocol
+
+🧩 Step 2: Create and activate virtual environment
+py -m venv venv
+venv\Scripts\activate
+
+🧩 Step 3: (Optional) Install Flask
+pip install flask
+
+
+(Flask is not required for this command-line version but can be used later for web simulation.)
+
+🧩 Step 4: Run the client to test the full Kerberos workflow
 python client.py
 
-shell
-Copy code
 
-3. Enter:
-username: alice
-password: Passw0rdA1
+Then enter:
+
+Username: alice
+Password: password123
+Service: fileserver
+
+✅ Expected Output
+
+You should see:
+
+=== KERBEROS CLIENT START ===
+[AS] Authentication successful...
+[TGS] Generated Service Ticket...
+[SERVICE] Authentication successful!
+=== SERVICE RESPONSE ===
+This is protected data for fileserver. Welcome, alice!
+
+
 service: fileserver
+
+--------------
+
+References
+
+MIT Kerberos Protocol Overview
+
+William Stallings, Cryptography and Network Security, 8th Edition
+
+Python Official Documentation – hashlib, os
+
+SEED Labs – Kerberos Authentication Lab (for conceptual guidance)
+
+
