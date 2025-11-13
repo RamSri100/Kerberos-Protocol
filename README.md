@@ -1,30 +1,20 @@
-# Kerberos-Protocol
-# Simplified Kerberos Authentication Protocol Implementation using Python
+Title- Implementation of a Simplified Kerberos Authentication Protocol Using Python
 
 Overview:
 
-This project is a simplified educational implementation of the Kerberos authentication protocol using Python.
-It demonstrates the core principles of Kerberos — secure user authentication, ticket-based access control, and session key exchange — implemented manually without relying on any cryptographic libraries such as cryptography, pycrypto, or openssl.
+This project is a simplified implementation of the Kerberos authentication protocol developed using Python, demonstrating the core principles of Kerberos including the secure user authentication, ticket-based access control, and session key exchange through manual implementation and without using any third-party cryptographic libraries.
 
-The project simulates the three primary entities of the Kerberos system:
+Kerberos Authentication protocol is basically a network authentication protocol which is used in Windows in order to strengthen the security predominantly for the client-server applications by including symmetric cryptography to encrypt tickets and sending them over only for a limited ammount of time instead of only passwords and also a thirdy party source for the authentication of client to services in  secure manner.
 
-Authentication Server (AS)
+The main components of the Kerberos system:
 
-Ticket Granting Server (TGS)
+i. Authentication Server (AS)
 
-Service Server (Resource Server)
+ii. Ticket Granting Server (TGS)
 
-Client
+iii. Service Server (Resource Server)
 
----
-
- Project Objectives:
-- Understand and implement the Kerberos authentication workflow.
-- Demonstrate secure access using Ticket Granting Tickets (TGTs) and Service Tickets.
-- Build a working AS → TGS → Service Server communication system.
-- Implement manual cryptographic logic for encryption, decryption, and key derivation
-- Reinforce information security principles — authentication, confidentiality, and freshness validation
-- Provide a functional end-to-end simulation using Python.
+iv. Client
 
 ---
 
@@ -43,23 +33,19 @@ kerberos-sim/
 ---
 
 Approach:
-1. Authentication Phase (AS)
+1. Authentication Phase (Authentication Server)
 
-Client sends username and password to the Authentication Server.
+Initially, the Client submits the username and password to the Authentication Server.
 
-AS verifies credentials and issues a Ticket Granting Ticket (TGT) encrypted with the TGS master key.
+Then, the Server will verify the entered credentials and issues a Ticket Granting Ticket which will be encrypted with the TGS master key.
 
-AS sends back:
-
-The TGT
-
-The Client–TGS Session Key, encrypted with a key derived from the client’s password.
+Now, the Authentication Server sends back a Ticket Granting Ticket and a Session Key(Client-Ticket granting server), which is encrypted with a key derived from the client’s password.
 
 2. Ticket Granting Phase (TGS)
 
-Client sends TGT and an Authenticator (encrypted with the Client–TGS Session Key) to the TGS.
+After the client receives the Ticket granting ticket and the session key, this TGT and an Authenticator (encrypted with the Client–TGS Session Key) is sent to the Ticket granting server.
 
-TGS validates both and issues:
+Ticket Granting Server will validate both and then issues:
 
 A Service Ticket (encrypted with the service’s master key)
 
