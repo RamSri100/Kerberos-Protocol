@@ -33,7 +33,7 @@ kerberos-sim/
 ---
 
 Approach:
-1. Authentication Phase (Authentication Server)
+1. Authentication Phase (Authentication Server):
 
 Initially, the Client submits the username and password to the Authentication Server.
 
@@ -41,19 +41,15 @@ Then, the Server will verify the entered credentials and issues a Ticket Grantin
 
 Now, the Authentication Server sends back a Ticket Granting Ticket and a Session Key(Client-Ticket granting server), which is encrypted with a key derived from the client’s password.
 
-2. Ticket Granting Phase (TGS)
+2. Ticket Granting Phase (TGS):
 
-After the client receives the Ticket granting ticket and the session key, this TGT and an Authenticator (encrypted with the Client–TGS Session Key) is sent to the Ticket granting server.
+After the client receives the Ticket granting ticket and the session key, this TGT and an Authenticator which is encrypted with the Client–TGS Session Key is sent to the Ticket granting server.
 
-Ticket Granting Server will validate both and then issues:
+Then, the Ticket Granting Server will validate both and then issues a Service Ticket which is encrypted with the service’s master key and the Client–Service Session Key encrypted with the Client–TGS Session Key.
 
-A Service Ticket (encrypted with the service’s master key)
+3. Service Access Phase (Resource Server):
 
-A Client–Service Session Key, encrypted with the Client–TGS Session Key.
-
-3. Service Access Phase (Resource Server)
-
-Client sends the Service Ticket and an Authenticator (encrypted with the Client–Service Session Key) to the Service Server.
+In this phase, the Client sends the Service Ticket and the Authenticator which is encrypted with the Client–Service Session Key) to the Service Server.
 
 Server decrypts, validates, and grants access to the protected resource.
 
