@@ -55,46 +55,60 @@ Server decrypts, validates, and grants access to the protected resource.
 
 ---------
 Challenges:
-Understanding Kerberos ticket flow (AS → TGS → Service)- Studied real Kerberos packet flow and simplified it logically
-Avoiding crypto libraries- Implemented XOR cipher and key derivation manually
-Ticket & timestamp validation-Created reusable helper functions for freshness verification
-Managing multiple keys-Used consistent JSON structures and hex-encoding for clarity
-Organizing modules-Divided each stage into separate Python files for modular clarity
+i.Understanding the working flow of Kerberos  (AS → TGS → Service).
+ii.Avoiding the external cryptographic libraries.
+iii.Ticket and timestamp validation.
+iv.Management of multiple keys.
+v.Organization of all the modules.
 
 ---------
-
+Solutions:
+i. Analyzed the true Kerberos packet flow in order to arrive at a logical simplification.
+ii. Implemented the XOR cipher as well as the key derivation directly in python.
+iii.Created reusable helper functions in the main python file for freshness verification.
+iv.Used consistent JSON structures and hex-encoding technicques for management of the keys.
+v.Divided every single stage into multiple Python files in order to acheive the modular clarity.
 
 ---------
 
 How to Run:
 
-Step 1: Clone the repository
+Firstly, open command prompt and perform the initial setup:
+
+Step 1: Cloning the created repository
 git clone https://github.com/RamSri100/Kerberos-Protocol.git
 cd Kerberos-Protocol
 
-🧩 Step 2: Create and activate virtual environment
+Step 1: Creating the folder: kerberos-sim:
+mkdir kerberos-sim
+(All the python files have to be saved in this folder-under single environment).
+
+The, changing the directory:
+cd kerberos-sim
+
+Step 2: Creating and activating the virtual environment
 py -m venv venv
 venv\Scripts\activate
 
-🧩 Step 3: (Optional) Install Flask
+Step 3: (Optional) Install Flask
 pip install flask
-
 
 (Flask is not required for this command-line version but can be used later for web simulation.)
 
-🧩 Step 4: Run the client to test the full Kerberos workflow
-python client.py
+Step 4: Check the installed files:
 
+kerberos-sim>pip list
+
+Step 4: Run the client to test the full Kerberos workflow
+python client.py
 
 Then enter:
 
 Username: alice
-Password: password123
+Password: Passw0rdA1
 Service: fileserver
 
-✅ Expected Output
-
-You should see:
+Output:
 
 === KERBEROS CLIENT START ===
 [AS] Authentication successful...
@@ -108,7 +122,7 @@ service: fileserver
 
 --------------
 
-References
+References:
 
 MIT Kerberos Protocol Overview
 
