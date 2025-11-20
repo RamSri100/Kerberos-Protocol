@@ -21,13 +21,13 @@ iv. Client
 Structure:
 kerberos-sim/
 │
-├── client.py               → Simulates the Kerberos client workflow
-├── server_as.py            → Authentication Server (AS)
-├── server_tgs.py           → Ticket Granting Server (TGS)
-├── server_service.py       → Resource/Service Server
-├── crypto_utils.py         → Custom-built encryption, decryption, key derivation
-├── .gitignore              → Ignored files (venv, __pycache__)
-└── README.md               → Documentation file
+├── client.py (Simulates the Kerberos client workflow)
+├── server_as.py (Authentication Server (AS) )
+├── server_tgs.py (Ticket Granting Server (TGS) )
+├── server_service.py (Resource/Service Server) )
+├── crypto_utils.py (Custom-built encryption, decryption, key derivation)
+├── .gitignore (Includes (venv, __pycache__) )
+└── README.md  (Documentation file )
 
 
 ---
@@ -75,10 +75,6 @@ How to Run:
 
 Firstly, open command prompt and perform the initial setup:
 
-Step 1: Cloning the created repository
-git clone https://github.com/RamSri100/Kerberos-Protocol.git
-cd Kerberos-Protocol
-
 Step 1: Creating the folder: kerberos-sim:
 mkdir kerberos-sim
 (All the python files have to be saved in this folder-under single environment).
@@ -108,25 +104,11 @@ Username: alice
 Password: Passw0rdA1
 Service: fileserver
 
-Output:
-
-=== KERBEROS CLIENT START ===
-[AS] Authentication successful...
-[TGS] Generated Service Ticket...
-[SERVICE] Authentication successful!
-=== SERVICE RESPONSE ===
-This is protected data for fileserver. Welcome, alice!
-
-
-service: fileserver
-
 --------------
 
 References:
 
 MIT Kerberos Protocol Overview
-
-William Stallings, Cryptography and Network Security, 8th Edition
 
 Python Official Documentation – hashlib, os
 
